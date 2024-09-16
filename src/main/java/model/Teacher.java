@@ -1,6 +1,7 @@
 package model;
 
 import jakarta.persistence.*;
+import model.Department;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -14,25 +15,33 @@ public class Teacher implements Serializable {
     @GeneratedValue( strategy=GenerationType.IDENTITY )
     private int teacherId;
     private String salary;
-    private String TeacherName;
+    private String teacherName;
 
-    @ManyToOne
-    private Department department;
-    public Teacher(int teacherId, String salary, String teacherName) {
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Address address;
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+
+    public Teacher( String salary, String teacherName) {
         super();
-        this.teacherId = teacherId;
         this.salary = salary;
-        TeacherName = teacherName; }
+        this.teacherName = teacherName;    }
     public Teacher() {}
 
-    public Teacher(String s, String mHaseeb, Department dept1) {
+    public Teacher(String salary, String teacherName, Department department) {
+        this.salary = salary;
+        this.teacherName = teacherName;
     }
 
-    public Department getDep() {
-        return department; }
-    public void setDep(Department department) {
-        this.department = department;
-    }
+
     public int getTeacherId() {
         return teacherId;
     }
@@ -46,9 +55,8 @@ public class Teacher implements Serializable {
         this.salary = salary;
     }
     public String getTeacherName() {
-        return TeacherName;
+        return teacherName;
     }
     public void setTeacherName(String teacherName) {
-        TeacherName = teacherName; }
+        this.teacherName = teacherName;    }
 }
-
